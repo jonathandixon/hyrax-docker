@@ -1,0 +1,18 @@
+# Users
+# To generate the password hash use the following command
+#
+#    slappasswd -h "{MD5}" -s PASSWORD
+
+dn: cn=Hyrax Admin,ou=Users,{{ LDAP_BASE_DN }}
+changetype: add
+cn: Hyrax Admin
+gidnumber: 100
+givenname: Hyrax
+objectclass: inetOrgPerson
+objectclass: posixAccount
+objectclass: top
+sn: Admin
+uid: hyraxadmin
+mail: admin@example.com
+uidnumber: 1000
+userpassword: {MD5}ISMvKXpXpadDiUoOSoAfww==

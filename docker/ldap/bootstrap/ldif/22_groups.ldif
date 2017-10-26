@@ -1,0 +1,8 @@
+# Dev Team Group
+dn: cn=hyrax-admin,ou=Groups,{{ LDAP_BASE_DN }}
+changetype: add
+cn: hyrax-admin
+gidnumber: 500
+objectclass: posixGroup
+objectclass: top
+memberUid: hyraxadmin

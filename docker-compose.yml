@@ -1,0 +1,107 @@
+version: '2'
+services:
+  web:
+    build: docker/web
+    image: hyrax_web
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/opt/hyrax
+      - gems:/opt/bundle
+    links:
+      - db
+      - db_test
+      - redis
+      - fcrepo
+      - solr
+      - cas
+      - ldap
+    environment:
+      RAILS_ENV: development
+      HYRAX_DB_HOST: db
+  worker:
+    image: hyrax_web
+    links:
+      - db
+      - redis
+      - web
+    volumes_from:
+      - web
+    environment:
+      RAILS_ENV: development
+      HYRAX_REDIS_HOST: redis
+      HYRAX_REDIS_PORT: 6379
+      HYRAX_URL: http://web:3000
+      QUEUE: "*"
+    command: sidekiq
+  db:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: root
+      POSTGRES_USER: root
+      POSTGRES_DB: hyrax
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+  fcrepo_db:
+    image: postgres
+    ports:
+      - "5434:5432"
+    environment:
+      POSTGRES_PASSWORD: root
+      POSTGRES_USER: root
+      POSTGRES_DB: fcrepo
+    volumes:
+      - fcrepo_db:/var/lib/postgresql/data
+  db_test:
+    image: postgres
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_PASSWORD: root
+      POSTGRES_USER: root
+      POSTGRES_DB: hyrax
+  redis:
+    image: redis
+    command: redis-server --appendonly yes
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis:/data
+  solr:
+    build: docker/solr
+    ports:
+     - "8983:8983"
+    volumes:
+      - solr:/opt/solr/server/solr/mycores
+  fcrepo:
+    build: docker/fcrepo
+    ports:
+      - "8984:8984"
+    links:
+      - fcrepo_db
+    volumes:
+      - fcrepo:/opt/fcrepo/data
+  cas:
+    build: docker/cas
+    ports:
+      - "8443:8443"
+      - "8080:8080"
+    links:
+      - ldap
+  ldap:
+    build: docker/ldap
+    ports:
+      - "389:389"
+      - "636:636"
+volumes:
+  fcrepo:
+  fcrepo_db:
+  gems:
+  pgdata:
+  redis:
+  solr:
+networks:
+  default:
+    driver: bridge
