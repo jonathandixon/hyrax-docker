@@ -25,6 +25,13 @@ Start a docker machine and run:
 docker-compose up -d
 ```
 
+The default is to run the rails server on port 3000 of the docker machine.
+
+- Rails Server: [http://192.168.99.100:3000/]()
+- Solr: [http://192.168.99.100:8983/solr/]()
+- FCREPO: [http://192.168.99.100:8984/fcrepo/]()
+- CAS: [http://192.168.99.100:8080/]()
+
 ## Help
 
 ### Running Rails Commands
