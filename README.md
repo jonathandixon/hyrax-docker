@@ -32,6 +32,19 @@ The default is to run the rails server on port 3000 of the docker machine.
 - FCREPO: [http://192.168.99.100:8984/fcrepo/]()
 - CAS: [http://192.168.99.100:8080/]()
 
+## Hyrax Configuration
+
+See the `default_config` directory for default config files.
+
+Requires the `pg` gem. Add `gem 'pg'` to `Gemfile`.
+
+Set the `fits_path` in `config/initializers/hyrax.rb`:
+
+```rb
+  # Path to the file characterization tool
+  config.fits_path = '/opt/fits/fits.sh'
+```
+
 ## Help
 
 ### Running Rails Commands

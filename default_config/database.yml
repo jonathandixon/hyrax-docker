@@ -1,0 +1,21 @@
+default: &default
+  adapter: postgresql
+  username: root
+  password: root
+  port: 5432
+  pool: 5
+  timeout: 5000
+
+development:
+  <<: *default
+  host: db
+  database: hyrax
+
+test:
+  <<: *default
+  host: db_test
+  database: hyrax
+
+production:
+  <<: *default
+  database: db/production.sqlite3

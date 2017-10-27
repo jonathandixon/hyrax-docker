@@ -1,0 +1,9 @@
+development:
+  host: redis
+  port: 6379
+test:
+  host: redis
+  port: 6379
+production:
+  host: redis
+  port: 6379
