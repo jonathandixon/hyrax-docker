@@ -45,6 +45,8 @@ Set the `fits_path` in `config/initializers/hyrax.rb`:
   config.fits_path = '/opt/fits/fits.sh'
 ```
 
+The `worker` container requires Sidekiq. Follow the Hyrax guide for [Using Sidekiq with Hyrax](https://github.com/samvera/hyrax/wiki/Using-Sidekiq-with-Hyrax). If containers are already running restart after adding sidekiq, `docker-compose restart`.
+
 ## Help
 
 ### Running Rails Commands
