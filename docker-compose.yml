@@ -8,7 +8,7 @@ services:
     volumes:
       - .:/opt/hyrax
       - gems:/opt/bundle
-    links:
+    depends_on:
       - db
       - db_test
       - redis
@@ -21,7 +21,7 @@ services:
       HYRAX_DB_HOST: db
   worker:
     image: hyrax_web
-    links:
+    depends_on:
       - db
       - redis
       - web
@@ -79,7 +79,7 @@ services:
     build: docker/fcrepo
     ports:
       - "8984:8984"
-    links:
+    depends_on:
       - fcrepo_db
     volumes:
       - fcrepo:/opt/fcrepo/data
@@ -88,7 +88,7 @@ services:
     ports:
       - "8443:8443"
       - "8080:8080"
-    links:
+    depends_on:
       - ldap
   ldap:
     build: docker/ldap
